@@ -51,7 +51,7 @@ def search_products(query, data):
 # Main function to run the app
 def main():
     # Load the image and display it
-    img = Image.open('img.png')
+    img = Image.open('swift.png')
     st.image(img, width=600)
     st.title("Search Engine and Product Recommendation System")
 
