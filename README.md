@@ -1,9 +1,40 @@
-# Product Recommendation System
+# **Live Demo**
+🚀 Explore the deployed **Amazon Product Search Engine** here:  
+🔗 [Search Recommender SwiftBuy](https://searchrecommenderswiftbuy.streamlit.app/)
 
-### This project is a simple search engine and product recommendation system designed to help users find relevant products based on their queries. It leverages natural language processing (NLP) techniques to enhance the search functionality.
+---
 
-### Features
-- **Product Search**: Enter a product name or keyword to search for products.
-- **Recommendation**: Provides a list of products similar to the user's query using TF-IDF vectorization and cosine similarity.
-- **Stemmed Tokens**: Uses a Snowball Stemmer to process text, ensuring more accurate matches.
-- **Interactive Interface**: Built with Streamlit for an easy-to-use and interactive web application
+# **Amazon Product Search Engine**
+
+This project implements a search engine for products in the **Amazon Product Dataset** using **Natural Language Processing (NLP)** techniques and a **Streamlit-based web application**.
+
+## **Features**
+- 🔍 **Search Functionality**: Users can search for products by entering a query.  
+- 🧠 **NLP Processing**: Utilizes **tokenization, stemming, and TF-IDF vectorization** to preprocess and analyze product titles and descriptions.  
+- 📊 **Relevance Ranking**: Returns the **top 10 most relevant products** based on **cosine similarity** between the query and dataset.  
+- 🎨 **User-Friendly Interface**: Built using **Streamlit**, allowing for easy interaction and visualization of results.  
+
+---
+
+## **Dataset**
+- 📂 **Name**: Amazon Product Dataset  
+- 🌐 **Source**: [Kaggle](https://www.kaggle.com/)  
+- 📖 **Description**: Contains information about over **1.3 million products**, including titles, descriptions, categories, and prices.  
+- 🔢 **Columns Used**: `Title`, `Description`, and `Category`  
+
+---
+
+## **Installation**
+Follow these steps to set up and run the project locally:  
+
+### **Prerequisites**
+- 🐍 **Python 3.8 or higher**  
+- Install the required dependencies using:  
+  ```bash
+  pip install -r requirements.txt
+  ```
+
+### **Run the App**
+```bash
+streamlit run app.py
+
