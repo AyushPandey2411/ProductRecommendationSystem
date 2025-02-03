@@ -4,7 +4,7 @@
 
 ---
 
-# **Amazon Product Search Engine**
+# **SwiftBuy Product Search Engine**
 
 This project implements a search engine for products in the **Amazon Product Dataset** using **Natural Language Processing (NLP)** techniques and a **Streamlit-based web application**.
 
