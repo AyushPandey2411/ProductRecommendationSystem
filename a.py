@@ -92,19 +92,23 @@ def main():
     query = st.text_input("Enter Product Name", key="query", label_visibility="collapsed", max_chars=100)
     st.markdown('<div style="text-align:center;">Search for products by name or category.</div>', unsafe_allow_html=True)
 
-    # Search button
+    # Initialize a button that will change once clicked
     submit = st.button('Search', key='search_button')
 
     if submit:
-        if query:
-            # Search for matching products
-            res = search_products(query, data)
-            if res is not None:
-                st.write(res)
+        with st.spinner('Finding the best matches for you...'):
+            if query:
+                # Search for matching products
+                res = search_products(query, data)
+                if res is not None:
+                    st.write(res)
+                else:
+                    st.write("No matching products found. Please try a different query.")
             else:
-                st.write("No matching products found. Please try a different query.")
-        else:
-            st.write("Please enter a product name to search.")
+                st.write("Please enter a product name to search.")
+
+        # Change the button color after the search or hide it
+        st.button('Search', key='search_button', disabled=True)  # Disables the button after search
 
 # Ensure the script runs only when executed directly
 if __name__ == "__main__":
