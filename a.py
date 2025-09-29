@@ -1,3 +1,4 @@
+```python
 import pandas as pd
 import numpy as np
 import nltk
@@ -7,8 +8,8 @@ from sklearn.metrics.pairwise import cosine_similarity
 import streamlit as st
 from PIL import Image
 
-# Download the required NLTK data used for splitting text into tokens
-nltk.download('punkt_tab')
+# Download the required NLTK data
+nltk.download('punkt')
 
 # Load the dataset with caching to improve performance
 @st.cache_data
@@ -27,7 +28,7 @@ def tokenize_and_stem(text):
 # Create stemmed tokens column
 def create_stemmed_tokens_column(data):
     data['stemmed_tokens'] = data.apply(
-        lambda row: tokenize_and_stem(row['Title'] + ' ' + row['Description']), axis=1
+        lambda row: tokenize_and_stem(str(row['Title']) + ' ' + str(row['Description'])), axis=1
     )
     return data
 
@@ -53,59 +54,76 @@ def search_products(query, data):
 def main():
     # Load the image and display it
     img = Image.open('swift.png')
-    st.image(img, use_column_width=True)  # Make image responsive
-    st.title("Search Engine and Product Recommendation System")
+    st.image(img, use_column_width=True)
+
+    st.markdown(
+        "<h1 style='text-align: center; color: #ff5733;'>Search Engine & Product Recommendation</h1>",
+        unsafe_allow_html=True
+    )
 
     # Load and preprocess the data
     data = load_data()
     data = create_stemmed_tokens_column(data)
 
-    # Layout for user input and search
+    # Custom CSS for styling
     st.markdown("""
         <style>
-            .title {
-                text-align: center;
-                color: #ff5733;
-                font-size: 28px;
-                font-weight: bold;
-            }
-            .stButton > button {
+            .stButton>button {
                 background-color: #ff5733;
                 color: white;
-                padding: 12px 30px;
-                border-radius: 5px;
+                padding: 10px 25px;
+                border-radius: 8px;
                 border: none;
                 font-size: 16px;
-                cursor: pointer;
-                width: 100%;
+                font-weight: bold;
+                transition: 0.3s;
             }
-            .stButton > button:hover {
-                background-color: #ff4511;
+            .stButton>button:hover {
+                background-color: #e04b20;
+                transform: scale(1.05);
             }
-            .search-input {
-                width: 100%;
+            .search-card {
+                background: #ffffff;
+                padding: 15px;
+                border-radius: 12px;
+                box-shadow: 0 2px 6px rgba(0,0,0,0.1);
+                margin-bottom: 15px;
             }
         </style>
     """, unsafe_allow_html=True)
 
-    # User input for search query
-    query = st.text_input("Enter Product Name", key="query", label_visibility="collapsed", max_chars=100)
-    st.markdown('<div style="text-align:center;">Search for products by name or category.</div>', unsafe_allow_html=True)
-
-    # Search button
-    submit = st.button('Search', key='search_button')
+    # Input layout in columns
+    col1, col2 = st.columns([4,1])
+    with col1:
+        query = st.text_input("Enter Product Name", key="query", max_chars=100, placeholder="Search by product or category...")
+    with col2:
+        submit = st.button('Search', key='search_button')
 
     if submit:
         if query:
-            # Search for matching products
-            res = search_products(query, data)
+            with st.spinner("🔎 Searching for best matches..."):
+                res = search_products(query, data)
+
             if res is not None:
-                st.write(res)
+                st.subheader("Top Matching Products:")
+                for _, row in res.iterrows():
+                    st.markdown(
+                        f"""
+                        <div class="search-card">
+                            <h4 style="color:#ff5733;">{row['Title']}</h4>
+                            <p><b>Category:</b> {row['Category']}</p>
+                            <p>{row['Description'][:200]}...</p>
+                            <p style="font-size:13px; color:grey;">Similarity Score: {row['similarity']:.2f}</p>
+                        </div>
+                        """,
+                        unsafe_allow_html=True
+                    )
             else:
-                st.write("No matching products found. Please try a different query.")
+                st.error("❌ No matching products found. Try a different query.")
         else:
-            st.write("Please enter a product name to search.")
+            st.warning("⚠️ Please enter a product name to search.")
 
 # Ensure the script runs only when executed directly
 if __name__ == "__main__":
     main()
+```
