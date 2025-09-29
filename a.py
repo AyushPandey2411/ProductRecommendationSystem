@@ -1,4 +1,3 @@
-```python
 import pandas as pd
 import numpy as np
 import nltk
@@ -126,4 +125,3 @@ def main():
 # Ensure the script runs only when executed directly
 if __name__ == "__main__":
     main()
-```
